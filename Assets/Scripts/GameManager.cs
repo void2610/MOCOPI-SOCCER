@@ -25,7 +25,6 @@ public class GameManager : MonoBehaviour
     private GameObject scoreText;
     private GameObject ball;
     private GameObject goal;
-
     private int score = 0;
 
     private void KickBallToGoal()
