@@ -21,6 +21,23 @@ public class GameManager : MonoBehaviour
         }
     }
 
+    enum GameState
+    {
+        StartMenu,
+        ReadyToKick,
+        Kicking,
+        GameOver
+    }
+
+    [SerializeField]
+    private GameObject ballPrefab;
+
+    private Vector3 ballSpawnPosition;
+
+    private GameState gameState = GameState.ReadyToKick;
+    private float kickStartTime;
+    private float KICK_TIME_LIMIT = 3.0f;
+
 
     private GameObject scoreText;
     private GameObject ball;
@@ -35,9 +52,16 @@ public class GameManager : MonoBehaviour
         ball.GetComponent<Rigidbody>().AddForce(direction.normalized * 1000);
     }
 
-    public void SetBall(GameObject ball)
+    public void SetBall()
     {
-        this.ball = ball;
+        if (ball != null)
+        {
+            Destroy(ball);
+        }
+
+        GameObject newBall = Instantiate(ballPrefab, ballSpawnPosition, Quaternion.identity);
+        this.ball = newBall;
+        gameState = GameState.ReadyToKick;
     }
 
     public void AddScore(int num)
@@ -51,14 +75,31 @@ public class GameManager : MonoBehaviour
         ball = GameObject.Find("Ball");
         goal = GameObject.Find("GoalTrigger");
         scoreText = GameObject.Find("ScoreText");
+        ballSpawnPosition = GameObject.Find("BallSpawnAncher").transform.position;
     }
 
 
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
+        switch (gameState)
         {
-            KickBallToGoal();
+            case GameState.ReadyToKick:
+                if (Input.GetKeyDown(KeyCode.Space))
+                {
+                    KickBallToGoal();
+                    kickStartTime = Time.time;
+                    gameState = GameState.Kicking;
+                }
+                break;
+            case GameState.Kicking:
+                if (kickStartTime + KICK_TIME_LIMIT < Time.time)
+                {
+                    SetBall();
+                    gameState = GameState.ReadyToKick;
+                }
+                break;
+            default:
+                break;
         }
     }
 }
