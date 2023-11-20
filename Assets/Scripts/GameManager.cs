@@ -87,7 +87,7 @@ public class GameManager : MonoBehaviour
             case GameState.ReadyToKick:
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
-                    KickBallToGoal(Vector3.zero);
+                    KickBallToGoal(1.0f, Vector3.zero);
                     kickStartTime = Time.time;
                     gameState = GameState.Kicking;
                 }
