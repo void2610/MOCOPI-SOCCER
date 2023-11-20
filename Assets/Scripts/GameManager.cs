@@ -34,7 +34,7 @@ public class GameManager : MonoBehaviour
 
     private Vector3 ballSpawnPosition;
 
-    private GameState gameState = GameState.ReadyToKick;
+    private GameState gameState = GameState.StartMenu;
     private float kickStartTime;
     private float KICK_TIME_LIMIT = 3.0f;
 
@@ -44,8 +44,16 @@ public class GameManager : MonoBehaviour
     private GameObject goal;
     private int score = 0;
 
+    public void StartGame()
+    {
+        this.gameState = GameState.ReadyToKick;
+        //1秒間待機
+        Invoke("SetBall", 1.0f);
+    }
     private void KickBallToGoal(float power, Vector3 offset)
     {
+        if (ball == null) return;
+
         Vector3 direction = goal.transform.position - ball.transform.position;
         direction += new Vector3(0, 4, 0);
         direction += offset;
@@ -73,7 +81,6 @@ public class GameManager : MonoBehaviour
 
     void Start()
     {
-        ball = GameObject.Find("Ball");
         goal = GameObject.Find("GoalTrigger");
         scoreText = GameObject.Find("ScoreText");
         ballSpawnPosition = GameObject.Find("BallSpawnAncher").transform.position;
@@ -87,9 +94,9 @@ public class GameManager : MonoBehaviour
             case GameState.ReadyToKick:
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
+                    gameState = GameState.Kicking;
                     KickBallToGoal(1.0f, Vector3.zero);
                     kickStartTime = Time.time;
-                    gameState = GameState.Kicking;
                 }
                 break;
             case GameState.Kicking:
