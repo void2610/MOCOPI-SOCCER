@@ -104,6 +104,7 @@ public class GameManager : MonoBehaviour
                 {
                     SetBall();
                     gameState = GameState.ReadyToKick;
+
                 }
                 break;
             default:
