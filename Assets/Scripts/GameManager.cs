@@ -44,12 +44,13 @@ public class GameManager : MonoBehaviour
     private GameObject goal;
     private int score = 0;
 
-    private void KickBallToGoal()
+    private void KickBallToGoal(float power, Vector3 offset)
     {
         Vector3 direction = goal.transform.position - ball.transform.position;
-        direction = new Vector3(direction.x, direction.y + 4, direction.z);
+        direction += new Vector3(0, 4, 0);
+        direction += offset;
 
-        ball.GetComponent<Rigidbody>().AddForce(direction.normalized * 1000);
+        ball.GetComponent<Rigidbody>().AddForce(direction.normalized * 1000 * power);
     }
 
     public void SetBall()
@@ -86,7 +87,7 @@ public class GameManager : MonoBehaviour
             case GameState.ReadyToKick:
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
-                    KickBallToGoal();
+                    KickBallToGoal(Vector3.zero);
                     kickStartTime = Time.time;
                     gameState = GameState.Kicking;
                 }
