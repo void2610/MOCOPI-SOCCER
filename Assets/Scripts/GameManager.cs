@@ -21,8 +21,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
+
+    private GameObject scoreText;
     private GameObject ball;
     private GameObject goal;
+
+    private int score = 0;
 
     private void KickBallToGoal()
     {
@@ -31,10 +35,23 @@ public class GameManager : MonoBehaviour
 
         ball.GetComponent<Rigidbody>().AddForce(direction.normalized * 1000);
     }
+
+    public void SetBall(GameObject ball)
+    {
+        this.ball = ball;
+    }
+
+    public void AddScore(int num)
+    {
+        score += num;
+        scoreText.GetComponent<UnityEngine.UI.Text>().text = "Score: " + score.ToString();
+    }
+
     void Start()
     {
         ball = GameObject.Find("Ball");
         goal = GameObject.Find("GoalTrigger");
+        scoreText = GameObject.Find("ScoreText");
     }
 
 

@@ -15,12 +15,4 @@ public class Ball : MonoBehaviour
     {
 
     }
-
-    void OnTriggerEnter(Collider other)
-    {
-        if (other.gameObject.name == "GoalTrigger")
-        {
-            Debug.Log("Goal!");
-        }
-    }
 }
