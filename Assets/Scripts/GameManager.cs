@@ -21,11 +21,12 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    enum GameState
+    public enum GameState
     {
         StartMenu,
         ReadyToKick,
         Kicking,
+        GoalPerformance,
         GameOver
     }
 
@@ -34,12 +35,14 @@ public class GameManager : MonoBehaviour
 
     private Vector3 ballSpawnPosition;
 
-    private GameState gameState = GameState.StartMenu;
-    private float kickStartTime;
+    public GameState gameState { private set; get; }
+    private float stateStartTime = 99999;
     private float KICK_TIME_LIMIT = 3.0f;
+    private float GOAL_PERFORMANCE_TIME_LIMIT = 3.0f;
 
 
     private GameObject scoreText;
+    private GameObject stateText;
     private GameObject ball;
     private GameObject goal;
     private int score = 0;
@@ -70,20 +73,25 @@ public class GameManager : MonoBehaviour
 
         GameObject newBall = Instantiate(ballPrefab, ballSpawnPosition, Quaternion.identity);
         this.ball = newBall;
-        gameState = GameState.ReadyToKick;
     }
 
-    public void AddScore(int num)
+    public void OnGoal(int num)
     {
         score += num;
         scoreText.GetComponent<UnityEngine.UI.Text>().text = "Score: " + score.ToString();
+
+        gameState = GameState.GoalPerformance;
+        MenuManager.instance.ChangeGameState(GameState.GoalPerformance);
+        stateStartTime = Time.time;
     }
 
     void Start()
     {
         goal = GameObject.Find("GoalTrigger");
         scoreText = GameObject.Find("ScoreText");
+        stateText = GameObject.Find("StateText");
         ballSpawnPosition = GameObject.Find("BallSpawnAncher").transform.position;
+        gameState = GameState.StartMenu;
     }
 
 
@@ -94,20 +102,33 @@ public class GameManager : MonoBehaviour
             case GameState.ReadyToKick:
                 if (Input.GetKeyDown(KeyCode.Space))
                 {
-                    gameState = GameState.Kicking;
-                    KickBallToGoal(1.0f, Vector3.zero);
-                    kickStartTime = Time.time;
+                    if (ball != null)
+                    {
+                        gameState = GameState.Kicking;
+                        KickBallToGoal(1.0f, Vector3.zero);
+                        stateStartTime = Time.time;
+                    }
                 }
                 break;
             case GameState.Kicking:
-                if (kickStartTime + KICK_TIME_LIMIT < Time.time)
+                if (stateStartTime + KICK_TIME_LIMIT < Time.time)
                 {
                     SetBall();
                     gameState = GameState.ReadyToKick;
                 }
                 break;
+            case GameState.GoalPerformance:
+                if (stateStartTime + GOAL_PERFORMANCE_TIME_LIMIT < Time.time)
+                {
+                    gameState = GameState.ReadyToKick;
+                    SetBall();
+                    MenuManager.instance.ChangeGameState(GameState.ReadyToKick);
+                }
+                break;
             default:
                 break;
         }
+
+        stateText.GetComponent<UnityEngine.UI.Text>().text = gameState.ToString();
     }
 }
