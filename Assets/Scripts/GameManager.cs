@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class GameManager : MonoBehaviour
 {
@@ -27,6 +28,7 @@ public class GameManager : MonoBehaviour
         ReadyToKick,
         Kicking,
         GoalPerformance,
+        ShowPicture,
         GameOver
     }
 
@@ -39,12 +41,15 @@ public class GameManager : MonoBehaviour
     private float stateStartTime = 99999;
     private float KICK_TIME_LIMIT = 3.0f;
     private float GOAL_PERFORMANCE_TIME_LIMIT = 3.0f;
+    private float SHOW_PICTURE_TIME_LIMIT = 3.0f;
 
 
     private GameObject scoreText;
     private GameObject stateText;
     private GameObject ball;
     private GameObject goal;
+    private GameObject performanceCamera;
+    private GameObject performancePicture;
     private int score = 0;
 
     public void StartGame()
@@ -90,6 +95,8 @@ public class GameManager : MonoBehaviour
         goal = GameObject.Find("GoalTrigger");
         scoreText = GameObject.Find("ScoreText");
         stateText = GameObject.Find("StateText");
+        performancePicture = GameObject.Find("PerformancePicture");
+        performanceCamera = GameObject.Find("PerformanceCamera");
         ballSpawnPosition = GameObject.Find("BallSpawnAncher").transform.position;
         gameState = GameState.StartMenu;
     }
@@ -120,8 +127,20 @@ public class GameManager : MonoBehaviour
             case GameState.GoalPerformance:
                 if (stateStartTime + GOAL_PERFORMANCE_TIME_LIMIT < Time.time)
                 {
-                    gameState = GameState.ReadyToKick;
+                    Texture2D screenshot = performanceCamera.GetComponent<PerformanceCamera>().Capture();
+                    performancePicture.GetComponent<RawImage>().texture = screenshot;
+
+                    gameState = GameState.ShowPicture;
+                    MenuManager.instance.ChangeGameState(GameState.ShowPicture);
+                    stateStartTime = Time.time;
+                }
+                break;
+            case GameState.ShowPicture:
+                if (stateStartTime + SHOW_PICTURE_TIME_LIMIT < Time.time)
+                {
+                    performancePicture.GetComponent<RawImage>().texture = null;
                     SetBall();
+                    gameState = GameState.ReadyToKick;
                     MenuManager.instance.ChangeGameState(GameState.ReadyToKick);
                 }
                 break;

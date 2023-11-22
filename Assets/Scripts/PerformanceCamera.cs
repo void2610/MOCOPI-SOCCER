@@ -13,10 +13,12 @@ public class PerformanceCamera : MonoBehaviour
     private Camera captureCamera;
     private string savePath = "Assets/Resources/Screenshots/";
 
+    private int screenshotSize = 512;
+
     public Texture2D Capture()
     {
         // カメラのレンダーテクスチャを作成
-        RenderTexture renderTexture = new RenderTexture(Screen.width, Screen.height, 24);
+        RenderTexture renderTexture = new RenderTexture(screenshotSize, screenshotSize, 24);
         captureCamera.targetTexture = renderTexture;
 
         // テクスチャをアクティブにしてレンダリング
@@ -24,8 +26,8 @@ public class PerformanceCamera : MonoBehaviour
         RenderTexture.active = renderTexture;
 
         // テクスチャから2Dテクスチャを作成
-        Texture2D screenshot = new Texture2D(Screen.width, Screen.height, TextureFormat.RGB24, false);
-        screenshot.ReadPixels(new Rect(0, 0, Screen.width, Screen.height), 0, 0);
+        Texture2D screenshot = new Texture2D(screenshotSize, screenshotSize, TextureFormat.RGB24, false);
+        screenshot.ReadPixels(new Rect(0, 0, screenshotSize, screenshotSize), 0, 0);
         screenshot.Apply();
 
         // レンダーテクスチャとアクティブなテクスチャをリセット
@@ -35,7 +37,7 @@ public class PerformanceCamera : MonoBehaviour
 
         // 画像を保存
         byte[] bytes = screenshot.EncodeToPNG();
-        string fileName = "Screenshot_" + System.DateTime.Now.ToString("yyyyMMddHHmmss") + ".png";
+        string fileName = System.DateTime.Now.ToString("yyyyMMddHHmmss") + ".png";
         string filePath = Path.Combine(savePath, fileName);
         File.WriteAllBytes(filePath, bytes);
 
