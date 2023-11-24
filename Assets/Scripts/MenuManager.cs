@@ -67,6 +67,6 @@ public class MenuManager : MonoBehaviour
             titleProps.SetActive(false);
             GameManager.instance.StartGame();
         }
-        goalPerformanceTimer.GetComponent<Text>().text = Mathf.Floor(GameManager.instance.stateStartTime + 3 - Time.time).ToString();
+        goalPerformanceTimer.GetComponent<Text>().text = Mathf.Floor(GameManager.instance.stateStartTime + 2 - Time.time).ToString();
     }
 }
