@@ -205,6 +205,42 @@ MeshFilter:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4327551}
   m_Mesh: {fileID: 10202, guid: 0000000000000000e000000000000000, type: 0}
+--- !u!1 &54044102 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -3531558982016292387, guid: cccbbdb3cbdde464ba23dc13bf813538, type: 3}
+  m_PrefabInstance: {fileID: 1517960067}
+  m_PrefabAsset: {fileID: 0}
+--- !u!136 &54044104
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 54044102}
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_Enabled: 1
+  m_Radius: 0.040557206
+  m_Height: 0.611472
+  m_Direction: 1
+  m_Center: {x: 0.013862285, y: 0.1689965, z: 0.024771214}
+--- !u!114 &54044105
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 54044102}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4dd4a3d8d482ac44395882a3467e9148, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  velocity: {x: 0, y: 0, z: 0}
+  direction: {x: 0, y: 0, z: 0}
+  previousPosition: {x: 0, y: 0, z: 0}
+  previousVelocity: {x: 0, y: 0, z: 0}
+  forceMagnitude: 0
 --- !u!1001 &85803118
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -21144,10 +21180,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 1
   m_Enabled: 1
-  m_Radius: 0.04472446
+  m_Radius: 0.04109276
   m_Height: 0.61774296
   m_Direction: 1
-  m_Center: {x: 0.00000023438946, y: 0.16586103, z: 0.024771085}
+  m_Center: {x: -0.010935402, y: 0.16586103, z: 0.024771154}
 --- !u!1 &1893211507
 GameObject:
   m_ObjectHideFlags: 0
