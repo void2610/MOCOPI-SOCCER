@@ -83,7 +83,7 @@ public class GameManager : MonoBehaviour
     public void OnGoal(int num)
     {
         score += num;
-        scoreText.GetComponent<UnityEngine.UI.Text>().text = "Score: " + score.ToString();
+        scoreText.GetComponent<UnityEngine.UI.Text>().text = "スコア " + score.ToString();
 
         gameState = GameState.GoalPerformance;
         MenuManager.instance.ChangeGameState(GameState.GoalPerformance);
