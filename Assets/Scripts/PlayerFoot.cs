@@ -9,10 +9,10 @@ public class PlayerFoot : MonoBehaviour
     private int triggerValue = 0;
     
     //Vector3 velocity;
-    public Vector3 velocity = new Vector3(0.0f, 0.0f, 0.0f);
-    public Vector3 direction = new Vector3(0.0f, 0.0f, 0.0f);
-    public Vector3 previousPosition = new Vector3(0.0f, 0.0f, 0.0f); 
-    public Vector3 previousVelocity = new Vector3(0.0f, 0.0f, 0.0f);
+    public Vector3 velocity = Vector3.zero;
+    public Vector3 direction = Vector3.zero;
+    public Vector3 previousPosition = Vector3.zero;
+    public Vector3 previousVelocity = Vector3.zero;
     public float forceMagnitude = 0;
        
      void Start()
@@ -20,7 +20,7 @@ public class PlayerFoot : MonoBehaviour
         previousPosition = transform.position;
     }
     
-    void Update()
+    void FixedUpdate()
     {
        
         velocity = transform.position - previousPosition; // 前フレームからの移動量を取得
@@ -29,14 +29,8 @@ public class PlayerFoot : MonoBehaviour
          // 前フレームからの速度変化を計算
         Vector3 velocityChange = velocity - previousVelocity;
 
-        // 経過時間（デルタタイム）を取得
-        float deltaTime = Time.fixedDeltaTime;
-
-        // 加速度の計算
-        Vector3 acceleration = velocityChange / deltaTime;
-
         // ベクトルの大きさ（Magnitude）を取得し、それを float 型の変数に格納
-        forceMagnitude = acceleration.magnitude;
+        forceMagnitude = velocityChange.magnitude;
 
         // デバッグログに推定される力の大きさを表示
         
