@@ -44,7 +44,7 @@ public class PlayerFoot : MonoBehaviour
         // 現在の速度を前フレームの速度として保存
         previousVelocity = velocity;
 
-        direction *= 10;
+        direction *= 50;
         previousPosition = transform.position;   
     }
 
@@ -59,7 +59,7 @@ public class PlayerFoot : MonoBehaviour
         if(other.GetComponent<Ball>())
         {
             // 別のスクリプトを呼び出す
-            GameManager.instance.KickBallToGoal(forceMagnitude*100,direction);
+            GameManager.instance.KickBallToGoal(forceMagnitude*300,direction);
         }
   }
 }
