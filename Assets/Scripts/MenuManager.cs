@@ -57,7 +57,6 @@ public class MenuManager : MonoBehaviour
 
         goalPerformanceProps = GameObject.Find("GoalPerformanceProps");
         goalPerformanceProps.SetActive(false);
-        //goalPerformanceTimer = GameObject.Find("GoalPerformanceTimer");
     }
 
     // Update is called once per frame
@@ -68,6 +67,6 @@ public class MenuManager : MonoBehaviour
             titleProps.SetActive(false);
             GameManager.instance.StartGame();
         }
-        goalPerformanceTimer.GetComponent<Text>().text = (3.0f - Mathf.Floor(GameManager.instance.stateStartTime)).ToString();
+        goalPerformanceTimer.GetComponent<Text>().text = Mathf.Floor(GameManager.instance.stateStartTime + 3 - Time.time).ToString();
     }
 }

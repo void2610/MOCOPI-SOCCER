@@ -116,13 +116,13 @@ public class GameManager : MonoBehaviour
         stateText = GameObject.Find("StateText");
         performancePicture = GameObject.Find("PerformancePicture");
         performanceCamera = GameObject.Find("PerformanceCamera");
-        ballSpawnPosition = GameObject.Find("BallSpawnAncher").transform.position;
         gameState = GameState.StartMenu;
     }
 
 
     void Update()
     {
+        ballSpawnPosition = GameObject.Find("BallSpawnAncher").transform.position;
         if (Input.GetKeyDown(KeyCode.Space))
         {
             ResetBall();
