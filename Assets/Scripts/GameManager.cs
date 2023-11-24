@@ -38,8 +38,8 @@ public class GameManager : MonoBehaviour
     private Vector3 ballSpawnPosition;
 
     public GameState gameState { private set; get; }
-    private float stateStartTime = 99999;
-    private float KICK_TIME_LIMIT = 3.0f;
+    public float stateStartTime = 99999;
+    private float KICK_TIME_LIMIT = 8.0f;
     private float GOAL_PERFORMANCE_TIME_LIMIT = 3.0f;
     private float SHOW_PICTURE_TIME_LIMIT = 3.0f;
 
@@ -50,6 +50,7 @@ public class GameManager : MonoBehaviour
     private GameObject goal;
     private GameObject performanceCamera;
     private GameObject performancePicture;
+    private GameObject performanceTimer;
     private int score = 0;
 
     public void StartGame()

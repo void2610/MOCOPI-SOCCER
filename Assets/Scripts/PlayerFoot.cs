@@ -40,7 +40,7 @@ public class PlayerFoot : MonoBehaviour
         if (other.GetComponent<Ball>())
         {
             // 別のスクリプトを呼び出す
-            GameManager.instance.KickBallToGoal(forceMagnitude * 300, direction);
+            GameManager.instance.KickBallToGoal(forceMagnitude * 1500, direction);
         }
     }
 }

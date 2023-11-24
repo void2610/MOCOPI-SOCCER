@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class MenuManager : MonoBehaviour
 {
@@ -23,6 +24,7 @@ public class MenuManager : MonoBehaviour
 
     private GameObject titleProps;
     private GameObject goalPerformanceProps;
+    public GameObject goalPerformanceTimer;
 
     public void ChangeGameState(GameManager.GameState gameState)
     {
@@ -55,6 +57,7 @@ public class MenuManager : MonoBehaviour
 
         goalPerformanceProps = GameObject.Find("GoalPerformanceProps");
         goalPerformanceProps.SetActive(false);
+        //goalPerformanceTimer = GameObject.Find("GoalPerformanceTimer");
     }
 
     // Update is called once per frame
@@ -65,5 +68,6 @@ public class MenuManager : MonoBehaviour
             titleProps.SetActive(false);
             GameManager.instance.StartGame();
         }
+        goalPerformanceTimer.GetComponent<Text>().text = (3.0f - Mathf.Floor(GameManager.instance.stateStartTime)).ToString();
     }
 }
