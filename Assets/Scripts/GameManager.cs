@@ -149,6 +149,7 @@ public class GameManager : MonoBehaviour
                 break;
         }
 
+
         stateText.GetComponent<UnityEngine.UI.Text>().text = gameState.ToString();
     }
 }
