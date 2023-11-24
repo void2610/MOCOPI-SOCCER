@@ -19,8 +19,7 @@ public class Goal : MonoBehaviour
         if (other.gameObject.GetComponent<Ball>() != null)
         {
             Destroy(other.gameObject);
-            GameManager.instance.AddScore(1);
-            GameManager.instance.SetBall();
+            GameManager.instance.OnGoal(1);
         }
     }
 }
