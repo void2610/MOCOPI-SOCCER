@@ -3,8 +3,9 @@ using UnityEngine.UI;
 
 public class RainbowText : MonoBehaviour
 {
-    public Text rainbowText;
-    public float colorChangeSpeed = 1.0f;
+    private Text rainbowText;
+    [SerializeField]
+    private float colorChangeSpeed = 1.0f;
 
     void Start()
     {

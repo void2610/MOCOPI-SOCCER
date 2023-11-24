@@ -40,6 +40,10 @@ public class MenuManager : MonoBehaviour
                 titleProps.SetActive(false);
                 goalPerformanceProps.SetActive(true);
                 break;
+            case GameManager.GameState.ShowPicture:
+                titleProps.SetActive(false);
+                goalPerformanceProps.SetActive(false);
+                break;
             default:
                 break;
         }
