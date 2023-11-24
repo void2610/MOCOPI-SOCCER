@@ -67,6 +67,9 @@ public class GameManager : MonoBehaviour
         direction += offset;
 
         ball.GetComponent<Rigidbody>().AddForce(direction.normalized * 10 * power);
+
+        gameState = GameState.Kicking;
+        stateStartTime = Time.time;
     }
 
     public void SetBall()
@@ -107,15 +110,6 @@ public class GameManager : MonoBehaviour
         switch (gameState)
         {
             case GameState.ReadyToKick:
-                if (Input.GetKeyDown(KeyCode.Space))
-                {
-                    if (ball != null)
-                    {
-                        gameState = GameState.Kicking;
-                        KickBallToGoal(1.0f, Vector3.zero);
-                        stateStartTime = Time.time;
-                    }
-                }
                 break;
             case GameState.Kicking:
                 if (stateStartTime + KICK_TIME_LIMIT < Time.time)
