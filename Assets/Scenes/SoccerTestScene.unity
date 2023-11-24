@@ -21031,8 +21031,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 90562131a1aa542c6a53ac99514a7568, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  player: {fileID: 806901633}
-  offset: {x: 1, y: 3, z: 0}
+  player: {fileID: 1954724708}
+  offset: {x: 2.5, y: 1, z: 1.5}
 --- !u!20 &1294061970
 Camera:
   m_ObjectHideFlags: 0
@@ -26359,6 +26359,11 @@ ParticleSystem:
         m_PostInfinity: 2
         m_RotationOrder: 4
     vectorLabel1_3: W
+--- !u!1 &1954724708 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -6237433015181546688, guid: cccbbdb3cbdde464ba23dc13bf813538, type: 3}
+  m_PrefabInstance: {fileID: 1517960067}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1960121075
 GameObject:
   m_ObjectHideFlags: 0

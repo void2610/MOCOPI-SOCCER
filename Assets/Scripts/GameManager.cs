@@ -84,6 +84,21 @@ public class GameManager : MonoBehaviour
         this.ball = newBall;
     }
 
+    public void ResetBall()
+    {
+        if (this.gameState != GameState.Kicking) return;
+
+        if (ball != null)
+        {
+            Destroy(ball);
+        }
+
+        GameObject newBall = Instantiate(ballPrefab, ballSpawnPosition, Quaternion.identity);
+        this.ball = newBall;
+        gameState = GameState.ReadyToKick;
+        stateStartTime = 999999;
+    }
+
     public void OnGoal(int num)
     {
         score += num;
@@ -108,6 +123,10 @@ public class GameManager : MonoBehaviour
 
     void Update()
     {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            ResetBall();
+        }
         switch (gameState)
         {
             case GameState.ReadyToKick:
