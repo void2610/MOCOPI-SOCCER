@@ -58,7 +58,7 @@ public class GameManager : MonoBehaviour
         //1秒間待機
         Invoke("SetBall", 1.0f);
     }
-    private void KickBallToGoal(float power, Vector3 offset)
+    public void KickBallToGoal(float power, Vector3 offset)
     {
         if (ball == null) return;
 
@@ -66,7 +66,7 @@ public class GameManager : MonoBehaviour
         direction += new Vector3(0, 4, 0);
         direction += offset;
 
-        ball.GetComponent<Rigidbody>().AddForce(direction.normalized * 1000 * power);
+        ball.GetComponent<Rigidbody>().AddForce(direction.normalized * 10 * power);
     }
 
     public void SetBall()
@@ -149,7 +149,5 @@ public class GameManager : MonoBehaviour
                 break;
         }
 
-
-        stateText.GetComponent<UnityEngine.UI.Text>().text = gameState.ToString();
     }
 }

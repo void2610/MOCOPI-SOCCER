@@ -88,6 +88,11 @@ namespace Mocopi.Receiver
         [Range(0, 1f)] public float MotionSmoothness = 0;
 
         /// <summary>
+        /// Enable motion buffering
+        /// </summary>
+        public bool IsBufferingEnabled = true;
+
+        /// <summary>
         /// Buffer delay recovery ratio
         /// </summary>
         [Range(0, 1f)] public float DelayRecoveryRate = 0.001f;
@@ -901,26 +906,33 @@ namespace Mocopi.Receiver
         {
             if (lastUsedIndex == -1) return;
 
-            var lastData = poseBuffer[lastUsedIndex];
-            var next = FindNextPose(lastUsedIndex);
-
-            // Here, if next is before the current time, search for next
-            if (next.data.timestamp < GetCurrentTimestamp())
-            {
-                lastData = next.data;
-                lastUsedIndex = next.bufferIndex;
-                next = FindNextPose(next.bufferIndex);
-            }
-
-            var nextData = next.data;
-
             var targetPose = temppose;
 
-            float t = Mathf.Clamp01(lastData.frameId == nextData.frameId ? 1.0f : (float)((GetCurrentTimestamp() - lastData.timestamp) / (nextData.timestamp - lastData.timestamp)));
+            if (IsBufferingEnabled)
+            {
+                var lastData = poseBuffer[lastUsedIndex];
+                var next = FindNextPose(lastUsedIndex);
 
-            LerpHumanPose(ref targetPose, ref lastData.pose, ref nextData.pose, t);
+                // Here, if next is before the current time, search for next
+                if (next.data.timestamp < GetCurrentTimestamp())
+                {
+                    lastData = next.data;
+                    lastUsedIndex = next.bufferIndex;
+                    next = FindNextPose(next.bufferIndex);
+                }
 
-            var lerptimestamp = t == 0 ? lastData.timestamp : lastData.timestamp + (nextData.timestamp - lastData.timestamp) / (1 / t);
+                var nextData = next.data;
+
+                float t = Mathf.Clamp01(lastData.frameId == nextData.frameId ? 1.0f : (float)((GetCurrentTimestamp() - lastData.timestamp) / (nextData.timestamp - lastData.timestamp)));
+
+                LerpHumanPose(ref targetPose, ref lastData.pose, ref nextData.pose, t);
+
+                var lerptimestamp = t == 0 ? lastData.timestamp : lastData.timestamp + (nextData.timestamp - lastData.timestamp) / (1 / t);
+            }
+            else
+            {
+                targetPose = this.poseBuffer[lastBufferIndex].pose;
+            }
 
             if (this.MotionSmoothness > 0)
             {
