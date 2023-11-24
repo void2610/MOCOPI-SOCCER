@@ -45,7 +45,6 @@ public class GameManager : MonoBehaviour
 
 
     private GameObject scoreText;
-    private GameObject stateText;
     private GameObject ball;
     private GameObject goal;
     private GameObject performanceCamera;
@@ -94,7 +93,6 @@ public class GameManager : MonoBehaviour
     {
         goal = GameObject.Find("GoalTrigger");
         scoreText = GameObject.Find("ScoreText");
-        stateText = GameObject.Find("StateText");
         performancePicture = GameObject.Find("PerformancePicture");
         performanceCamera = GameObject.Find("PerformanceCamera");
         ballSpawnPosition = GameObject.Find("BallSpawnAncher").transform.position;
@@ -148,7 +146,5 @@ public class GameManager : MonoBehaviour
             default:
                 break;
         }
-
-        stateText.GetComponent<UnityEngine.UI.Text>().text = gameState.ToString();
     }
 }
